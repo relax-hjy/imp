@@ -79,6 +79,7 @@ print(keyword.kwlist)
 '''
 ['False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 '''
+help("keywords")
 ```
 
 #### 三、缩进与换行
@@ -95,5 +96,5 @@ print(keyword.kwlist)
 
 1.单行注释使用#号
 
-2.多行注释使用三引号
+2.多行注释使用三引号''' """
 
