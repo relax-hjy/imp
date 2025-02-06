@@ -18,7 +18,7 @@
 
 ## python基本语法
 
-#### 一、python脚本的编码方式
+#### xxxxxxxxxx # torch.Tensor()指定数据或形状创建张量，指定数据的时候一定有方括号，包括列表和ndarray数组。import numpy as npnnn=np.random.randn(2,3)ttt=torch.tensor(nnn)print(ttt)x=torch.Tensor(2,3)x=torch.Tensor(nnn)print(x)y=torch.IntTensor([10])z=torch.FloatTensor([11,12])u=torch.DoubleTensor([11,12,13])python
 
 ```python
 """

@@ -1,0 +1,301 @@
+人工智能的主流技术的演变
+
+符号主义 ：专家系统占主导，基于规则
+
+统计主义：统计模型解决问题，机器学习时代
+
+神经网络：神经网络占主导，深度学习
+
+大规模预训练模型时代：transformer，Bert，Gpt
+
+
+
+
+
+人工智能
+
+机器学习：涉及算法和统计模型的使用。机器学习包括：传统机器学习和深度学习。
+
+深度学习：机器学习的分支，使用深度的神经网络对大规模高纬度的数据做拟合。
+
+
+
+使用场景
+
+图像
+
+nlp
+
+音频处理
+
+音乐生成
+
+语音合成
+
+视频分析
+
+
+
+
+
+pytorch基础
+
+tensor创建，维度和方括号层数对应
+
+torch.tensor() torch.Tensor() 两个方法均可以创建tensor
+
+```python
+# 维度和方括号层数对应
+# 使用torch.tensor()方法基于列表创建0到多维的tensor
+scalar=torch.tensor(7)
+print(f"0维度的张量{scalar}",scalar.ndim)
+vector=torch.tensor([1,2,3])
+print(f"1维度的张量{vector}",vector.ndim)
+matrix=torch.tensor([[1,2,3],[4,5,6]])
+print(f"2维度的张量{matrix}",matrix.ndim)
+tensor=torch.tensor([[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]])
+print(f"多维度的张量{tensor}",tensor.ndim,tensor.size()) # 两通道，三行四列
+```
+
+
+
+torch.tensor()  torch.Tensor()不同点
+
+torch.Tensor()可以通过形状来创建tensor，而且torch.Tensor(3)也变成创建长度为3的向量（标量因为没有方括号被视为用形状创建）。但他依旧保留了从数组和列表创建张量的能力。
+
+
+
+```python
+# tensor()和Tensor()的区别  tensor()方法只通过标量，数组，列表创建张量，Tensor()即可以通过数组和列表创建张量，也可以通过形状创建张量，注意标量因为没有方括号被视为用形状创建。
+import numpy as np
+a=torch.tensor(2) # 根据数据创建
+b=torch.Tensor(3) # 根据数据或形状，没有方括号的情况下都是指定形状
+print(a,b)
+
+# 由numpy创建数组，再通过数组创建tensor，等效于Tensor
+np1=np.random.randn(2,3)
+ts1=torch.tensor(np1)   # 数组创建
+ts2=torch.tensor([[1,2,3],[2,3,4]])  # 列表创建
+print(ts1)
+
+ts23=torch.Tensor(2,3)
+print(ts23,ts23.dtype)  # float
+
+tsint=torch.IntTensor(2,3)  # 等于 torch.Tensor(2,3,dtype=Int)
+print(tsint,tsint.dtype)
+tsDouble=torch.DoubleTensor(2,3)
+print(tsDouble,tsDouble.dtype)
+```
+
+
+
+**线性和随机张量**
+
+torch.arange(0,10,step) 左闭右开，step是步长
+
+torch.linspace(0,10,steps)  左闭右闭，steps是数字的个数
+
+torch.randn(2,3)
+
+torch.random.initial_seed()
+
+torch.random.manual_seed(100)
+
+```python
+# 创建线性和随机张量
+ts_246=torch.arange(0,10,2)#[start,end,step]左闭右开,步长
+print(ts_246)
+ts_lin=torch.linspace(0,11,10)# [start,end,几个数]左闭右闭，在区间内均匀地取多少个数
+print(ts_lin)
+
+# 设置和查看随机种子，torch.randn()生成固定张量
+print(torch.random.initial_seed())
+print(torch.random.manual_seed(100))
+print(torch.randn(2, 3))
+print(torch.rand(2,3))
+# torch.Tensor(2,3)
+print(torch.random.initial_seed())
+```
+
+
+
+#### 01张量和指定数字张量
+
+```python
+# 创建01张量   zeros,ones,zeros_like,ones_like
+ts_0=torch.zeros(2,3)
+print(ts_0)
+ts_1=torch.ones(2,3)
+print(ts_1)
+ts_rand=torch.rand(3,3)
+print(ts_rand)
+ts_randn=torch.randn(3,3)
+print(ts_randn)
+ts_zeros_like=torch.zeros_like(ts_rand)
+print(ts_zeros_like)
+```
+
+
+
+```python
+# full,full_like
+ts_10=torch.full([2,3],10)
+print(ts_10)
+ts_rand=torch.rand(3,3)
+ts_10_like=torch.full_like(ts_rand,10)
+print(ts_10_like)
+```
+
+
+
+#### #张量元素类型转换
+
+```python
+# 张量元素类型转换,short in16 int int32 long int64 float float32 double float64
+ts_int=torch.tensor([1,2,3],dtype=torch.int)
+print(ts_int)
+ts_float=ts_int.float()
+print(ts_float)
+ts_float2=ts_int.to(torch.double)
+print(ts_float2)
+ts_float3=ts_int.type(torch.DoubleTensor)
+print(ts_float3)
+```
+
+
+
+张量和numpy数组转化
+
+```python
+# 张量与数组的转换
+data_tensor=torch.tensor([2,3,4])
+print(type(data_tensor))
+
+# 共享内存的转换
+data_numpy=data_tensor.numpy()
+print(type(data_numpy))
+print(data_tensor,data_numpy)
+data_numpy[0]=100
+print(data_tensor,data_numpy)
+
+# 用深拷贝不共享内存
+data_numpy=data_tensor.numpy().copy()
+print(type(data_numpy))
+data_numpy[0]=200
+print(data_tensor,data_numpy)
+```
+
+```python
+data_np=np.array([2,3,4])
+data_ts=torch.from_numpy(data_np)
+data_ts[0]=100
+print(data_np,data_ts)
+
+torch.tensor(data_np) # 本身不共享内存
+```
+
+```python
+# 用item()这个函数将只有一个元素的张量提取出来
+data=torch.tensor([30])
+print(data.item())
+
+data=torch.tensor(30)
+print(data.item())
+```
+
+
+
+
+
+### 张量运算
+
+张量基本运算符号
+
+```python
+data=torch.randint(0,10,[2,3]) # 左闭右开
+print(data)
+new=data.add(10)
+print(new)
+print(data)
+# sub() mul() div() neg()
+```
+
+```python
+# 点乘，点积
+# 点乘，对应元素相乘
+data1=torch.tensor([[1,2],[3,4]])
+data2=torch.tensor([[5,6],[7,8]])
+data3=data1.mul(data2)
+data4=data1*data2
+print(data3,data4)
+
+# 点积就是矩阵乘法
+# （n,m）(m,p)=(n,p) 相乘相加  
+data5=data1.matmul(data2)
+data6=data1@data2
+print(data5,data6)
+```
+
+```
+张量数学计算
+```
+
+```python
+data=torch.randint(0,10,[2,3],dtype=torch.float64)
+print(data)
+print(data.mean())
+print(data.mean(dim=0))  # dim==0是最外层括号
+print(data.mean(dim=1))
+
+print(data.sum())
+print(data.sum(dim=0))
+print(data.sum(dim=1))
+
+print(torch.pow(data,2))    
+
+print(torch.sqrt(data))
+
+print(torch.log(data))
+
+print(torch.exp(data))
+```
+
+张量索引操作
+
+data[a,b,c]  a,b,c这些位置可以放入类列表数据，可以是多维。由于
+
+如果a,b,c的形状不一，会使用广播机制配成一样的，这个配成后的数据就是输出数据的形状。
+
+
+
+（1。取单个   2.切片    )3. 布尔（参与配平）   4. x[1, 1, [0,2,1,0]]
+
+```
+print(data[:,[1,2,3]])
+```
+
+```python
+data=torch.randint(0,10,[4,5])
+print(data)
+print(data[0])   # 0行
+print(data[:,0]) # 0列
+print(data[0,0]) # 0行0列
+print(data[[0,1],[1,2]])  # [0,1],[1,2]的两个数
+print(data[[0,1],[[1],[2]]]) # 
+
+print(data[:3,:2])
+```
+
+```
+# 布尔索引
+print(data[data[:,2]>5])
+
+print(data[:,data[1]>5])
+```
+
+```
+# 索引
+data=torch.randint(0,10,[3,4,5])
+print(data)
+print(data[0,:,:]) # 
+```
