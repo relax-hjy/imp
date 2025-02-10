@@ -14,13 +14,26 @@
 
 ​		[如何优雅的给 Docker 配置网络代理 - CharyGao - 博客园](https://www.cnblogs.com/Chary/p/18096678)
 
+```shell
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf <<EOF
+Environment="HTTP_PROXY=http://172.28.80.1:7890/"
+Environment="HTTPS_PROXY=http://172.28.80.1:7890/"
+Environment="NO_PROXY=localhost,127.0.0.1,.example.com"
+```
+
 
 
 [使用docker-compose安装Milvus向量数据库及Attu可视化连接工具_docker部署milvus attu-CSDN博客](https://blog.csdn.net/weimeilayer/article/details/144351466)
 
 
 
+### 在本机访问ubuntu的服务
 
+![image-20250208150802471](./assets/image-20250208150802471.png)
+
+- 在ubuntu中打开ipconfig。
+- 图中ip即为本机访问ubuntu所需要的ip。
 
 ps:
 

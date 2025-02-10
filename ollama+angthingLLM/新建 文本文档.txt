@@ -1,0 +1,12 @@
+https://www.cnblogs.com/hujunwei/p/18658780   ollama命令
+https://zhuanlan.zhihu.com/p/21292026204    ollama +anything使用
+https://mp.weixin.qq.com/s/PpY3k3kReKfQdeOJyrB6aw  部署rag私有化系统
+
+
+https://blog.csdn.net/dzysunshine/article/details/124493089 simcse的详细论文
+
+https://blog.csdn.net/bqw18744018044/article/details/119336466?spm=1001.2014.3001.5502  simcse
+https://github.com/hellonlp/sentence-similarity/blob/main/simcse/roberta_pytorch/vocab.txt  
+https://zhuanlan.zhihu.com/p/634871699
+
+https://www.cnblogs.com/Lee-yl/p/11169444.html  nlpproject

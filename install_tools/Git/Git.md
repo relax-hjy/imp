@@ -1,6 +1,19 @@
-测试连接，由successfully即为成功
+[Git基本使用教程（一）：入门及第一次基本完整操作_git的使用-CSDN博客](https://blog.csdn.net/qq_35206244/article/details/97698815)
 
+
+
+设置key并且测试连接，由successfully即为成功
+
+```bash
+git config --global user.name "注册名"
+
+git config --global user.email "注册邮箱"
+
+ssh-keygen -t rsa -C "自己的邮箱" #C:/User/用户/.ssh下，id_rsa为私钥，id_rsa.pub为公钥
 ssh -T git@github.com
+```
+
+
 
 ### 1. 克隆远程仓库（如果尚未克隆）
 
