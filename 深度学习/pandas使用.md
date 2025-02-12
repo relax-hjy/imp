@@ -18,11 +18,11 @@ p=pd.read_excel("data.xlsx",sheet_name="")
 
 
 ```
-df.count()           # 统计总数
-df.isnull().sum()    # 统计空值个数，is_null()返回布尔series
-df.dropna().count()
+df.count()           # 统计总行数
+df.isnull().sum()    # 统计有空值的行数，is_null()返回布尔series
+df.dropna().count()  # 统计非空值的行数
 
-df[df["A"].isnull()]    # 拿到列的空值
-df.dropna(subset='['A'])  # 拿到列的非空值
+df[df["A"].isnull()]    # 拿到某一字段为空的所有行
+df.dropna(subset='['A'])  # 拿到某一字段不为空的所有行
 ```
 
