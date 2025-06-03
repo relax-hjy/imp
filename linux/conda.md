@@ -18,9 +18,15 @@ conda remove -n DL_pytorch --all
 
 
 
-set http_proxy=http://your-proxy-server:port
+
+
+查看conda代理配置
 
 conda config --show proxy_servers
+
+设置conda代理配置
+
+set http_proxy=http://your-proxy-server:port
 
 
 

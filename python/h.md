@@ -1,0 +1,1 @@
+[什么是python交互式解释器 | 酷python (coolpython.net)](http://www.coolpython.net/python_primary/introduction/interpreter.html)

@@ -2,6 +2,8 @@
 
 
 
+## git常用功能介绍
+
 设置key并且测试连接，由successfully即为成功
 
 ```bash
@@ -115,20 +117,29 @@ git push origin main
 
 
 
+## 一般流程
 
+克隆仓库提交修改
+
+连上平台的账号
+
+```
+git clone 仓库
+
+修改内容
+
+然后在该仓库下执行下面内容：
 
 提交所有变化
-
 git add ./*  
 
 
 
 提交并写注释
-
 git commit -m ""   
 
 
-
 同步到远程仓库
-
 git push -u origin main
+```
+
