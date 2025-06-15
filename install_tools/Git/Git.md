@@ -149,5 +149,7 @@ git commit -m ""
 
 同步到远程仓库
 git push -u origin main
+如果报错，可能是没有关联仓库，需要添加关联再同步到远程。
+git remote add origin 
 ```
 
