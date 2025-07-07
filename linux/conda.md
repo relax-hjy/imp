@@ -1,3 +1,10 @@
+代理设置
+
+conda config --``set` `proxy_servers.http http:``//username``:password@address:port
+conda config --``set` `proxy_servers.https https:``//username``:password@address:port
+
+
+
 anaconda 包括 python解析器，包管理工具（conda，pip），扩展包
 
 conda和pip都是包管理工具
