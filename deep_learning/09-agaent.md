@@ -48,7 +48,7 @@ agent也是用来解决复杂问题的。
 
 
 
-function 工作原理
+### function 工作原理
 
 client   server    gpt api
 
@@ -58,21 +58,71 @@ client   server    gpt api
 
 
 
-调用单一函数
+### 调用单一函数
+
+部署模型，获取api  定义function_call  输入prompt到大模型，模型输出函数参数，调用本地函数得到返回，融入prompt，再次送入模型，获得结果。
+
+3.10   pip install zhipuai
+
+查询外部天气的函数，描述函数功能，解析模型参数调用函数
+
+![image-20250723112504697](./assets/image-20250723112504697.png)
 
 
 
-调用多个函数
+![image-20250723112737583](./assets/image-20250723112737583.png)
+
+
+
+定义模型应用函数
+
+
+
+### 调用多个函数
+
+
 
 
 
 调用数据库
 
-gpts
+
+
+连接数据库查询的聊天机器人
+
+database  表结构  字段
+
+
+
+定义查询数据库的函数   描述函数功能tools 
+
+## gpts
+
+什么是gpts
+
+再不写大模型的情况下，创建属于自己的gpt版本，通过prompt构建个人的ai助手。
+
+coze
+
+利用coze平台基于本地知识库快速搭建一个学习答疑的bot，
+
+收集数据，基于coze搭建知识库，搭建bot，将coze连到平台实现应用。
+
+![image-20250723164358423](./assets/image-20250723164358423.png)
+
+多个gpts的应用
+
+https://github.com/chatchat-space/Langchain-Chatchat
 
 
 
 assistant api
+
+gpts肯定不是维护多个大模型
+
+几百万个gpts都是通过assistant api 维护的
+
+什么是assitant api
 
 
 
