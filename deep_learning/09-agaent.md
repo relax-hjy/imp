@@ -233,6 +233,26 @@ AIagent 是ai主导的，以目标导向的智能体。
 
 #### agent的应用场景和实现工具
 
+agentbuilder  
+
+coze
+
+skyagents
+
+gentgpt
+
+langchain 构建ai应用的开源框架
+
+autogen  面向多个agent系统的开源框架
+
+chatdev
+
+crewai
+
+![image-20250724184646176](./assets/image-20250724184646176.png)
+
+人为拆解需求规划任务，agent来完成任务。
+
 
 
 
