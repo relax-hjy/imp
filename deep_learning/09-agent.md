@@ -267,6 +267,8 @@ CrewAI（基于longchain针对agent开发的封装）
 
 #### 项目：
 
+魔搭平台构建agent
+
 
 
 
