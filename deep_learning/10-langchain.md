@@ -151,3 +151,17 @@ langchain应用场景
 聊天机器人  tabular数据查询
 
 api交互 信息提取 文档总结
+
+
+
+![image-20250730111718646](./assets/image-20250730111718646.png)
+
+
+
+
+
+![image-20250730112036979](./assets/image-20250730112036979.png)
+
+
+
+rag demo
