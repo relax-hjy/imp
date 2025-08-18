@@ -1,6 +1,9 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 import time
-import torch
 
+
+import torch
 from transformers import AutoTokenizer, AutoModel
 # torch.set_default_tensor_type(torch.cuda.HalfTensor)
 
@@ -12,14 +15,15 @@ def inference(
         sentence: str
     ):
     """
-    模型 inference 函数。
-
+    微调模型的推理函数
     Args:
-        instuction (str): _description_
-        sentence (str): _description_
+        model:
+        tokenizer:
+        instuction:
+        sentence:
 
     Returns:
-        _type_: _description_
+
     """
     with torch.no_grad():
         input_text = f"Instruction: {instuction}\n"
@@ -46,9 +50,9 @@ def inference(
 if __name__ == '__main__':
     from rich import print
 
-    device = 'cuda:0'
+    device = 'cuda'
     max_new_tokens = 300
-    model_path = "./saved_model/model_best"
+    model_path = "./models_saved/model_best"
 
     tokenizer = AutoTokenizer.from_pretrained(
         model_path,
@@ -57,9 +61,11 @@ if __name__ == '__main__':
 
     model = AutoModel.from_pretrained(
         model_path,
-        trust_remote_code=True
+        trust_remote_code=True,
+        device_map='auto'
     ).half().to(device)
 
+    # 待处理列表
     samples = [
         {
             'instruction': "现在你是一个非常厉害的SPO抽取器。",
@@ -75,6 +81,7 @@ if __name__ == '__main__':
         }
     ]
 
+    # 循环处理列表
     start = time.time()
     for i, sample in enumerate(samples):
         print(f'sample-->{sample}')
