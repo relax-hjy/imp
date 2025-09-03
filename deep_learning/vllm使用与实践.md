@@ -127,6 +127,7 @@ apt list --installed <package_name>
 #### 启动embedding模型
 
 ```sh
+CUDA_VISIBLE_DEVICES=4,5,6,7 \
 vllm serve /data/dev/models_saved/deployed_embedding \
 --port 12000 \
 --trust-remote-code \
@@ -217,11 +218,39 @@ res = chat_completion.choices[0].message.content.strip()
 print(f"Prompt: {messages[0]['content']}\nResponse: {res}")
 ```
 
-python3 -m vllm.entrypoints.openai.api_server --model models_pre/Qwen3-4B-Instruct-2507 --host 0.0.0.0 --port 8080 --dtype auto --max-num-seqs 16 --max-model-len 1024 --tensor-parallel-size 1 --max-num-batched-tokens 2048   --dtype float16
+```sh
+python3 -m vllm.entrypoints.openai.api_server \
+--model /data/dev/models_pre/Qwen3-30B-A3B-Instruct-2507 \
+--host 0.0.0.0 \
+--port 8080 \
+--max-num-seqs 4 \
+--max-model-len 512 \
+--tensor-parallel-size 4 \
+--max-num-batched-tokens 1024 \
+--gpu-memory-utilization 0.95  \
+--dtype float32
+```
 
+```
+python -m vllm.model_executor.layers.fused_moe.tuning \
+  --model /data/dev/models_pre/Qwen3-30B-A3B-Instruct-2507 \
+  --tp 4 \
+  --dtype float32 \
+  --output /root/anaconda3/envs/vllm_271cu18/lib/python3.12/site-packages/vllm/model_executor/layers/fused_moe/configs/
+```
 
+python3 -m vllm.entrypoints.openai.api_server \
+> --model /data/dev/models_pre/Qwen3-30B-A3B-Instruct-2507 \
+> --host 0.0.0.0 \
+> --port 8080 \
+> --max-num-seqs 16 \
+> --max-model-len 512 \
+> --tensor-parallel-size 4 \
+> --max-num-batched-tokens 2048 \
+> --gpu-memory-utilization 0.95  \
+> --dtype float32
 
-python3 -m vllm.entrypoints.openai.api_server --model models_pre/Qwen3-4B-Instruct-2507 --host 0.0.0.0 --port 8080 --dtype auto --max-num-seqs 16 --max-model-len 1024 --tensor-parallel-size 1 --max-num-batched-tokens 2048   --dtype float16
+python3 -m vllm.entrypoints.openai.api_server --model /data/dev/models_pre/Qwen3-4B-Instruct-2507 --host 0.0.0.0 --port 8080 --dtype auto --max-num-seqs 16 --max-model-len 1024 --tensor-parallel-size 1 --max-num-batched-tokens 2048   --dtype float16
 
 参数列表解释
 
