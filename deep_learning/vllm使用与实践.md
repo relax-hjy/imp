@@ -129,14 +129,14 @@ apt list --installed <package_name>
 ```sh
 CUDA_VISIBLE_DEVICES=4,5,6,7 \
 vllm serve /data/dev/models_saved/deployed_embedding \
---port 12000 \
+--port 31000 \
 --trust-remote-code \
 --max-model-len 512 \
 --served-model-name qwen3-embedding \
 --gpu-memory-utilization 0.5 \
 --task  embed \
 --dtype half \
---tensor-parallel-size 4 \
+--tensor-parallel-size 4  \
 --max-num-batched-tokens 8192 \
 --max-num-seqs 16
 ```
@@ -223,15 +223,29 @@ python3 -m vllm.entrypoints.openai.api_server \
 --model /data/dev/models_pre/Qwen3-30B-A3B-Instruct-2507 \
 --host 0.0.0.0 \
 --port 8080 \
+--max-num-seqs 2 \
+--max-model-len 512 \
+--tensor-parallel-size 4 \
+--max-num-batched-tokens 1024 \
+--gpu-memory-utilization 0.90  \
+--dtype float32
+
+
+python3 -m vllm.entrypoints.openai.api_server \
+--model /data/dev/models_pre/gpt-oss-20B \
+--host 0.0.0.0 \
+--port 8080 \
 --max-num-seqs 4 \
 --max-model-len 512 \
 --tensor-parallel-size 4 \
 --max-num-batched-tokens 1024 \
 --gpu-memory-utilization 0.95  \
+--quantization awq \
 --dtype float32
 ```
 
 ```
+编译自己的moe编码
 python -m vllm.model_executor.layers.fused_moe.tuning \
   --model /data/dev/models_pre/Qwen3-30B-A3B-Instruct-2507 \
   --tp 4 \
