@@ -24,10 +24,6 @@ pip install vllm时指名 torch源 ，cuda版本torch会一同下载好。
 
 
 
-vllm 0.9.0以上都需要 torch 2.7.0以上
-
-
-
 pytorch 2.7.1显示不再支持  7.0架构的V100
 
 
@@ -219,6 +215,8 @@ print(f"Prompt: {messages[0]['content']}\nResponse: {res}")
 ```
 
 ```sh
+VLLM_DISABLE_FUSED_MOE=1 \
+VLLM_DISABLE_TRITON_OPS=1 \
 python3 -m vllm.entrypoints.openai.api_server \
 --model /data/dev/models_pre/Qwen3-30B-A3B-Instruct-2507 \
 --host 0.0.0.0 \
@@ -228,7 +226,7 @@ python3 -m vllm.entrypoints.openai.api_server \
 --tensor-parallel-size 4 \
 --max-num-batched-tokens 1024 \
 --gpu-memory-utilization 0.90  \
---dtype float32
+--dtype float16
 
 
 python3 -m vllm.entrypoints.openai.api_server \
@@ -240,7 +238,6 @@ python3 -m vllm.entrypoints.openai.api_server \
 --tensor-parallel-size 4 \
 --max-num-batched-tokens 1024 \
 --gpu-memory-utilization 0.95  \
---quantization awq \
 --dtype float32
 ```
 
