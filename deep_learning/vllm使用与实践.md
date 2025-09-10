@@ -225,20 +225,37 @@ python3 -m vllm.entrypoints.openai.api_server \
 --max-model-len 512 \
 --tensor-parallel-size 4 \
 --max-num-batched-tokens 1024 \
---gpu-memory-utilization 0.90  \
---dtype float16
+--gpu-memory-utilization 0.95  \
+--dtype float32
 
 
 python3 -m vllm.entrypoints.openai.api_server \
---model /data/dev/models_pre/gpt-oss-20B \
+--model /data/dev/models_pre/Qwen3-4B-Instruct-2507 \
 --host 0.0.0.0 \
 --port 8080 \
 --max-num-seqs 4 \
 --max-model-len 512 \
 --tensor-parallel-size 4 \
 --max-num-batched-tokens 1024 \
---gpu-memory-utilization 0.95  \
+--gpu-memory-utilization 0.5  \
 --dtype float32
+
+
+
+# seed部署
+python3 -m vllm.entrypoints.openai.api_server \
+    --host localhost \
+    --port 4321 \
+    --trust-remote-code \
+    --model /data/dev/models_pre/Seed-OSS-36B-Instruct \
+    --chat-template /data/dev/models_pre/Seed-OSS-36B-Instruct/chat_template.jinja \
+    --tensor-parallel-size 4 \
+    --dtype auto \
+    --served-model-name seed_oss
+    
+    
+    	    --enable-auto-tool-choice \
+        --tool-call-parser seed_oss \
 ```
 
 ```
@@ -562,3 +579,8 @@ SASS 和 cubin 的关系可以简单理解为：
 - **cubin** 是这段程序被打包后的 **二进制文件**，就像一个 `.exe` 文件，里面包含了 SASS 代码以及其他元数据（如符号表、调试信息、架构信息等）。
 
 所以，**SASS ≈ GPU 程序本身**，**cubin ≈ 打包后的 GPU 可执行文件**。
+
+
+
+
+
