@@ -584,3 +584,33 @@ SASS 和 cubin 的关系可以简单理解为：
 
 
 
+max_num_seqs 决定了一个batch最多处理几个request是吗
+
+可以这么理解，但还要再补一句“**同一时刻在 GPU 上并行**”才准确。
+
+- max_num_seqs 确实限定了**单次 forward 里最多能同时跑多少条序列**（也就是你说的“一个 batch 最多几个 request”）。
+- 不过 vLLM 的 batch 是**动态连续批**，只要 KV-cache 槽位和 max_num_batched_tokens 还够，scheduler 每次 forward 都会重新挑序列——先完成的立刻退出，新请求随时补位。
+- 所以“batch”在 vLLM 里不是固定大小的静态概念，而是**每个迭代瞬间的 snapshot**；max_num_seqs 只是给这个 snapshot 加了条“人头税”上限。
+
+
+
+1. max_num_batched_tokens
+   限制的是**一次 forward 里总共要算多少个 token**（prompt 部分 + 已生成的部分）。
+   它决定的是“**GPU 这次算不下了**”的硬上限，跟“waiting queue 里有多少条”无关。
+2. max_num_seqs
+   限制的是**同一时刻在 GPU 上并行跑的序列条数**（不管它们各自多长）。
+   它决定的是“**scheduler 最多同时拉多少条序列进本次 forward**”，也不是 waiting queue 的总长度。
+
+
+
+
+
+`max_model_len × max_num_seqs` 是一条**“绝对不可能同时发生”**的极端上限，拿它当等式去设 `max_num_batched_tokens` 会把显存/计算资源一次性锁死，**实际吞吐反而掉一大截**。
+
+正确思路
+
+1. `max_num_batched_tokens` 先按**显存能吃得下的 token 总量**给值（一般 4 k→16 k，先跑 `benchmark_throughput.py` 看 GPU 利用率）。
+2. `max_num_seqs` 按**业务并发条数**给值（64/128/256 均可）。
+3. 让 scheduler 自己去决定每次 forward 是“多序列+短长度”还是“少序列+长长度”，**不要自己做乘法绑死**。
+
+一句话：**那等式只是理论天花板，不是用来当配置公式的**。
