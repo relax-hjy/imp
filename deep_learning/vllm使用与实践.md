@@ -242,7 +242,7 @@ python3 -m vllm.entrypoints.openai.api_server \
 
 
 
-# seed部署
+# seed部署 版本不支持，放弃
 python3 -m vllm.entrypoints.openai.api_server \
     --host localhost \
     --port 4321 \
@@ -256,6 +256,18 @@ python3 -m vllm.entrypoints.openai.api_server \
     
     	    --enable-auto-tool-choice \
         --tool-call-parser seed_oss \
+        
+# glm4部署
+python3 -m vllm.entrypoints.openai.api_server \
+--model /data/dev/models_pre/GLM-4-32B-0414 \
+--host 0.0.0.0 \
+--port 8080 \
+--max-num-seqs 2 \
+--max-model-len 512 \
+--tensor-parallel-size 4 \
+--max-num-batched-tokens 1024 \
+--gpu-memory-utilization 0.98  \
+--dtype float32 
 ```
 
 ```
